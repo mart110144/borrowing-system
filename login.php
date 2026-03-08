@@ -14,14 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
-        if ($user && password_verify($password, $user['password'])) {
+        if ($user && $password === $user['password'])  {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role'] = $user['role'];
             $_SESSION['username'] = $user['username'];
             if ($user['role'] === 'admin') {
                 header('Location: admins');
             } else {
-                header('Location: user_dashboard');
+                header('Location: user_dashboard.php');
             }
             exit;
         } else {
